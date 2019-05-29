@@ -1,0 +1,27 @@
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
+    <header class="masthead mb-auto">
+        <div class="inner">
+           
+        </div>
+    </header>
+
+    <main role="main" class="inner cover">
+       
+        <h1>
+            {{(counter$ | async)?.total}}
+        </h1>
+        <p class="lead">
+            <button (click)="decrement()" class="btn btn-primary mr-3">-1</button>
+            <button (click)="increment()" class="btn btn-primary">+1</button>
+        </p>
+        <p>
+            <button (click)="reset()" class="btn btn-secondary btn-sm">Reset</button>
+        </p>
+    </main>
+
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+            <p></p>
+        </div>
+    </footer>
+</div>

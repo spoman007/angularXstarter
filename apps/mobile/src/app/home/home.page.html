@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-toolbar>
+        
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <h2 text-center>
+        {{counter$ | async}}
+    </h2>
+    <p text-center>
+        <ion-button (click)="decrement()"> -1</ion-button>
+        <ion-button (click)="increment()"> +1</ion-button>
+    </p>
+    <p text-center>
+        <ion-button (click)="reset()"> Reset</ion-button>
+    </p>
+</ion-content>
