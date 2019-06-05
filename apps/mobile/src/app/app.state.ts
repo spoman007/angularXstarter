@@ -1,5 +1,6 @@
-import {CounterState} from '@ngrx-demo/core';
+import { Todo } from '@ngrx-demo/core/src/todo/todo.model';
 
 export interface AppState {
-    readonly counter: CounterState;
+    readonly todos: Array<Todo>;
+    readonly currentFilter: string;
 }

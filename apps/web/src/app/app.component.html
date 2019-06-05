@@ -1,27 +1,26 @@
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
-    <header class="masthead mb-auto">
-        <div class="inner">
-           
-        </div>
-    </header>
+<div class="d-flex w-100 h-100 p-3 mx-auto flex-column text-center mt-5">
 
-    <main role="main" class="inner cover">
-       
-        <h1>
-            {{(counter$ | async)?.total}}
-        </h1>
-        <p class="lead">
-            <button (click)="decrement()" class="btn btn-primary mr-3">-1</button>
-            <button (click)="increment()" class="btn btn-primary">+1</button>
-        </p>
-        <p>
-            <button (click)="reset()" class="btn btn-secondary btn-sm">Reset</button>
-        </p>
-    </main>
-
-    <footer class="mastfoot mt-auto">
-        <div class="inner">
-            <p></p>
+    <div class="inner cover d-flex flex-column bd-highlight mb-3 height500">
+        <div class="form-group mx-sm-3 mb-2 d-flex justify-content-between">
+            <input class="form-control" #todo (keydown.enter)="addTodo(todo)">
+            <button type="button" class="btn btn-primary ml-3" (click)="addTodo(todo)">Add todo</button>
         </div>
-    </footer>
+
+        <ul>
+            <li class="text-left handCursor" *ngFor="let todo of todos$ | async | visibleTodos:currentFilter"
+                (click)="onTodoClick(todo.id)" [style.textDecoration]="todo.completed?'line-through':'none'">
+                {{todo.text}} <a class="text-right text-danger" href="#"
+                    (click)="removeTodo(todo.id); $event.stopPropogation">X</a>
+            </li>
+        </ul>
+        <p class="mt-auto p-2 bd-highlight">
+            <a href="#" (click)="applyFilter('SHOW_ALL');" class="btn btn-sm"
+                [ngClass]="{'btn-primary': currentFilter==='SHOW_ALL', 'btn-secondory': currentFilter!='SHOW_ALL'}">All</a>&nbsp;
+            <a href="#" (click)="applyFilter('SHOW_ACTIVE');" class="btn btn-sm"
+                [ngClass]="{'btn-primary': currentFilter==='SHOW_ACTIVE', 'btn-secondory': currentFilter!='SHOW_ACTIVE'}">Active</a>&nbsp;
+            <a href="#" (click)="applyFilter('SHOW_COMPLETED');" class="btn btn-sm"
+                [ngClass]="{'btn-primary': currentFilter==='SHOW_COMPLETED', 'btn-secondory': currentFilter!='SHOW_COMPLETED'}">Completed</a>
+        </p>
+    </div>
+
 </div>

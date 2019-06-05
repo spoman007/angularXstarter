@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 
 import {HomePage} from './home.page';
+import { VisibleTodosPipe } from '@ngrx-demo/core/src/visibleTodosPipe';
 
 @NgModule({
     imports: [
@@ -18,7 +19,7 @@ import {HomePage} from './home.page';
             }
         ])
     ],
-    declarations: [HomePage]
+    declarations: [HomePage, VisibleTodosPipe]
 })
 export class HomePageModule {
 }

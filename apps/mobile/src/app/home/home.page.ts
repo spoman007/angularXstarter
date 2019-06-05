@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
 
-import {CounterActions} from '@ngrx-demo/core';
+import {TodoActions, FilterActions} from '@ngrx-demo/core';
 import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {AppState} from '../../app/app.state';
+import { Todo } from '@ngrx-demo/core/src/todo/todo.model';
 
 @Component({
     selector: 'app-home',
@@ -12,22 +13,40 @@ import {AppState} from '../../app/app.state';
 })
 export class HomePage {
 
-    counter$: Observable<number>;
-
+    todos$: Observable<Array<Todo>>
+    currentFilter: string;
     constructor(private store: Store<AppState>) {
-        this.counter$ = this.store.pipe(select('counter', 'total'));
+        this.todos$ = this.store.pipe(select('todos'));
+        this.store.pipe(select('currentFilter')).subscribe(filter => this.currentFilter = filter);
     }
 
-    decrement() {
-        this.store.dispatch(new CounterActions.DecrementAction());
+
+    addTodo(input: { value: string; }) {
+        if (input.value.length === 0) return;
+        this.store.dispatch(
+            new TodoActions.AddTodo(
+                <Todo>{ text: input.value, completed: false }
+            )
+        );
+        input.value = '';
     }
 
-    increment() {
-        this.store.dispatch(new CounterActions.IncrementAction());
+    removeTodo(id: number) {
+        this.store.dispatch(
+            new TodoActions.DeleteTodo({ id })
+        );
     }
 
-    reset() {
-        this.store.dispatch(new CounterActions.ResetAction());
+    onTodoClick(id: number) {
+        this.store.dispatch(
+            new TodoActions.ToggleTodo({ id })
+        );
+    }
+
+    applyFilter(filter: string) {
+        this.store.dispatch(
+            new FilterActions.SetCurrentFilter({ filter })
+        );
     }
 
 }

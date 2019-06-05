@@ -1,20 +1,19 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
-import {CounterEffects} from './counter/counter.effects';
-
-import {counterReducer} from './counter/counter.reducer';
-import {counterInitialState} from './counter/counter.state';
 import {MyComponentComponent} from './my-component/my-component.component';
+import { TodoReducer } from './todo';
+import { TodoInitialState } from './todo/todo.reducer';
+import { FilterReducer } from './filter';
+import { initialState } from './filter/filter.reducer';
+import { VisibleTodosPipe } from './visibleTodosPipe';
 
 @NgModule({
     imports: [
         CommonModule,
-        StoreModule.forFeature('counter', counterReducer, {initialState: counterInitialState}),
-        EffectsModule.forFeature([CounterEffects])
+        StoreModule.forFeature('todos', TodoReducer, {initialState: TodoInitialState}),
+        StoreModule.forFeature('currentFilter', FilterReducer, {initialState: initialState}),
     ],
-    providers: [CounterEffects],
     declarations: [MyComponentComponent],
     exports: [MyComponentComponent]
 })
