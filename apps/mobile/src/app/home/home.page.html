@@ -1,37 +1,47 @@
 <ion-header>
     <ion-toolbar>
-
+        <ion-title>Todo App</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-    <div class="d-flex w-100 h-100 p-3 mx-auto flex-column text-center mt-5">
 
-        <div class="inner cover d-flex flex-column bd-highlight mb-3 height500">
-            <div class="form-group mx-sm-3 mb-2 d-flex justify-content-between">
-                <input class="form-control" #todo (keydown.enter)="addTodo(todo)">
-                <ion-button class="btn btn-primary ml-3" (click)="addTodo(todo)">Add todo</ion-button>
-            </div>
-
-            <ul>
-                <li class="text-left handCursor" *ngFor="let todo of todos$ | async | visibleTodos:currentFilter"
-                    (click)="onTodoClick(todo.id)" [style.textDecoration]="todo.completed?'line-through':'none'">
-                    {{todo.text}} <a class="text-right text-danger"
-                        (click)="removeTodo(todo.id); $event.stopPropogation">X</a>
-                </li>
-            </ul>
-            <p class="mt-auto p-2 bd-highlight">
-                <ion-button (click)="applyFilter('SHOW_ALL');" class="btn btn-sm"
-                    [ngClass]="{'btn-primary': currentFilter==='SHOW_ALL', 'btn-secondory': currentFilter!='SHOW_ALL'}">
-                    All</ion-button>&nbsp;
-                <ion-button (click)="applyFilter('SHOW_ACTIVE');" class="btn btn-sm"
-                    [ngClass]="{'btn-primary': currentFilter==='SHOW_ACTIVE', 'btn-secondory': currentFilter!='SHOW_ACTIVE'}">
-                    Active</ion-button>&nbsp;
-                <ion-button (click)="applyFilter('SHOW_COMPLETED');" class="btn btn-sm"
-                    [ngClass]="{'btn-primary': currentFilter==='SHOW_COMPLETED', 'btn-secondory': currentFilter!='SHOW_COMPLETED'}">
-                    Completed</ion-button>
-            </p>
-        </div>
-
+    <ion-row>
+        <ion-input #todo (keydown.enter)="addTodo(todo)" placeholder="Enter Title"></ion-input>
+        <ion-button round size="small" (click)="addTodo(todo)">Add todo</ion-button>
+    </ion-row>
+    <div style="margin-top: 50px">
+        <ion-list>
+            <ion-item *ngFor="let todo of todos$ | async | visibleTodos:currentFilter" (click)="onTodoClick(todo.id)"
+                [style.textDecoration]="todo.completed?'line-through':'none'">
+                <ion-label>
+                    <h2>{{todo.text}} </h2>
+                </ion-label>
+                <ion-badge slot="end" color="danger" (click)="removeTodo(todo.id)" fill="outline">
+                    X
+                </ion-badge>
+            </ion-item>
+        </ion-list>
     </div>
+
+
+
+
+
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <div style="text-align: center">
+            <ion-button size="small" (click)="applyFilter('SHOW_ALL');"
+                [color]="currentFilter==='SHOW_ALL'? 'primary' : 'light'">
+                All</ion-button>&nbsp;
+            <ion-button size="small" (click)="applyFilter('SHOW_ACTIVE');" class="btn btn-sm"
+                [color]="currentFilter==='SHOW_ACTIVE'? 'primary' : 'light'">
+                Active</ion-button>&nbsp;
+            <ion-button size="small" (click)="applyFilter('SHOW_COMPLETED');" class="btn btn-sm"
+                [color]="currentFilter==='SHOW_COMPLETED'? 'primary' : 'light'">
+                Completed</ion-button>
+        </div>
+    </ion-toolbar>
+</ion-footer>
